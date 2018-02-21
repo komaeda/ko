@@ -1,23 +1,31 @@
-use std::error::Error;
+extern crate walkdir;
+
+use std::path::PathBuf;
 use std::fs::File;
 use std::io::prelude::*;
-use std::path::Path;
+use walkdir::WalkDir;
 
-pub fn seven() {
-    let path = Path::new("test.md");
-    let mut file = match File::open(&path) {
-        Err(why) => panic!("couldn't open file: {}", why.description()),
-        Ok(file) => file,
-    };
-
-    let mut s = String::new();
-    match file.read_to_string(&mut s) {
-        Err(why) => panic!("couldn't read file: {}", why.description()),
-        Ok(_) => print!("file contains: {}", s),
-    };
+#[derive(Debug)]
+pub struct SimpleFile {
+    content: String,
+    path: PathBuf,
 }
 
-#[test]
-fn basic_test() {
-    seven()
+pub fn seven() {
+    let mut files = Vec::new();
+    for entry in WalkDir::new("example") {
+        let entry = entry.unwrap();
+        let path = entry.path().to_owned();
+        if !&path.is_dir() {
+            let mut file = File::open(&path).unwrap();
+            let mut content = String::new();
+            file.read_to_string(&mut content).unwrap();
+            let file_struct = SimpleFile {
+                content: content,
+                path: path,
+            };
+            files.push(file_struct);
+        }
+    }
+    println!("{:?}", files);
 }
