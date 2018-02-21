@@ -12,7 +12,12 @@ pub struct SimpleFile {
 }
 
 pub fn seven() {
-    let mut files = Vec::new();
+    let mut files = Vec::<SimpleFile>::new();
+    read_dir(&mut files);
+    println!("{:?}", files);
+}
+
+fn read_dir(files: &mut Vec<SimpleFile>) {
     for entry in WalkDir::new("example") {
         let entry = entry.unwrap();
         let path = entry.path().to_owned();
@@ -24,8 +29,7 @@ pub fn seven() {
                 content: content,
                 path: path,
             };
-            files.push(file_struct);
+            &files.push(file_struct);
         }
     }
-    println!("{:?}", files);
 }
