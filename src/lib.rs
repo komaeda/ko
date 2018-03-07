@@ -13,10 +13,11 @@ pub struct SimpleFile {
     rel_path: PathBuf,
 }
 
-pub fn seven() {
+pub fn seven<F>(mut middleware: F) -> ()
+    where F: FnMut(&mut Vec<SimpleFile>) -> &mut Vec<SimpleFile> {
     let mut files = Vec::<SimpleFile>::new();
     read_dir(&mut files);
-    println!("{:?}", files);
+    middleware(&mut files);
     write_dir(&mut files);
 }
 
@@ -46,11 +47,14 @@ fn write_dir(files: &mut Vec<SimpleFile>) {
         dir_path.pop();
         DirBuilder::new().recursive(true).create(&dir_path).unwrap();
         let mut fileref = File::create(&destination_path).unwrap();
-        fileref.write_all(file.content.as_bytes());
+        fileref.write_all(file.content.as_bytes()).unwrap();
     }
 }
 
 #[test]
 fn test () {
-    seven();
+    seven(|files| {
+        files[0].content = "hello".to_string();
+        files
+    });
 }
