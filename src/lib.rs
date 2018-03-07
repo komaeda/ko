@@ -8,13 +8,15 @@ use walkdir::WalkDir;
 #[derive(Debug)]
 pub struct SimpleFile {
     content: String,
-    path: PathBuf,
+    abs_path: PathBuf,
+    rel_path: PathBuf,
 }
 
 pub fn seven() {
     let mut files = Vec::<SimpleFile>::new();
     read_dir(&mut files);
     println!("{:?}", files);
+    write_dir(&mut files);
 }
 
 fn read_dir(files: &mut Vec<SimpleFile>) {
@@ -27,9 +29,24 @@ fn read_dir(files: &mut Vec<SimpleFile>) {
             file.read_to_string(&mut content).unwrap();
             let file_struct = SimpleFile {
                 content: content,
-                path: path,
+                abs_path: path.clone().canonicalize().unwrap(),
+                rel_path: path,
             };
             &files.push(file_struct);
         }
     }
+}
+
+fn write_dir(files: &mut Vec<SimpleFile>) {
+    for file in files {
+        let temp_path = file.rel_path.strip_prefix("example").unwrap();
+        let destination_path = PathBuf::from("destination").join(temp_path);
+        let mut fileref = File::create(&destination_path).unwrap();
+        fileref.write_all(file.content.as_bytes());
+    }
+}
+
+#[test]
+fn test () {
+    seven();
 }
