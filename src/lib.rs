@@ -13,11 +13,14 @@ pub struct SimpleFile {
     rel_path: PathBuf,
 }
 
-pub fn seven<F>(mut middleware: F) -> ()
-    where F: FnMut(&mut Vec<SimpleFile>) -> &mut Vec<SimpleFile> {
+type MiddlewareFunction = Box<FnMut(&mut Vec<SimpleFile>)>;
+
+pub fn seven(middleware: Vec<MiddlewareFunction>) -> () {
     let mut files = Vec::<SimpleFile>::new();
     read_dir(&mut files);
-    middleware(&mut files);
+    for mut function in middleware {
+        function(&mut files);
+    }
     write_dir(&mut files);
 }
 
@@ -53,8 +56,11 @@ fn write_dir(files: &mut Vec<SimpleFile>) {
 
 #[test]
 fn test () {
-    seven(|files| {
-        files[0].content = "hello".to_string();
-        files
-    });
+    seven(vec![Box::new(|files: &mut Vec<SimpleFile>| {
+        let file: &mut SimpleFile = &mut files[0];
+        file.content = "test hello".to_string();
+    }), Box::new(|files: &mut Vec<SimpleFile>| {
+        let file: &mut SimpleFile = &mut files[0];
+        file.content = "override".to_string();
+    })]);
 }
