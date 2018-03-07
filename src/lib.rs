@@ -4,6 +4,7 @@ use std::path::PathBuf;
 use std::fs::File;
 use std::io::prelude::*;
 use walkdir::WalkDir;
+use std::fs::DirBuilder;
 
 #[derive(Debug)]
 pub struct SimpleFile {
@@ -41,6 +42,9 @@ fn write_dir(files: &mut Vec<SimpleFile>) {
     for file in files {
         let temp_path = file.rel_path.strip_prefix("example").unwrap();
         let destination_path = PathBuf::from("destination").join(temp_path);
+        let mut dir_path = destination_path.clone();
+        dir_path.pop();
+        DirBuilder::new().recursive(true).create(&dir_path).unwrap();
         let mut fileref = File::create(&destination_path).unwrap();
         fileref.write_all(file.content.as_bytes());
     }
