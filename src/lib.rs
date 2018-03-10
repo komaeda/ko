@@ -15,13 +15,14 @@ pub struct SimpleFile {
 
 type MiddlewareFunction = Box<FnMut(&mut Vec<SimpleFile>)>;
 
-pub fn seven(middleware: Vec<MiddlewareFunction>) -> () {
+pub fn seven(middleware: Vec<MiddlewareFunction>) -> Vec<SimpleFile> {
     let mut files = Vec::<SimpleFile>::new();
     read_dir(&mut files);
     for mut function in middleware {
         function(&mut files);
     }
     write_dir(&mut files);
+    files
 }
 
 fn read_dir(files: &mut Vec<SimpleFile>) {
@@ -54,13 +55,19 @@ fn write_dir(files: &mut Vec<SimpleFile>) {
     }
 }
 
-#[test]
-fn test () {
-    seven(vec![Box::new(|files: &mut Vec<SimpleFile>| {
-        let file: &mut SimpleFile = &mut files[0];
-        file.content = "test hello".to_string();
-    }), Box::new(|files: &mut Vec<SimpleFile>| {
-        let file: &mut SimpleFile = &mut files[0];
-        file.content = "override".to_string();
-    })]);
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn it_works() {
+        let result = seven(vec![Box::new(|files: &mut Vec<SimpleFile>| {
+            let file: &mut SimpleFile = &mut files[0];
+            file.content = "test hello".to_string();
+        }), Box::new(|files: &mut Vec<SimpleFile>| {
+            let file: &mut SimpleFile = &mut files[0];
+            file.content = "override".to_string();
+        })]);
+        assert_eq!(result[0].content, "override");
+    }
 }
