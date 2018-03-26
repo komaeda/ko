@@ -1,7 +1,7 @@
 [package]
 name = "seven"
 version = "0.1.0"
-authors = ["Olivia Hugger <olivia@fastmail.com"]
+authors = ["Olivia Hugger <olivia@fastmail.com>"]
 
 [dependencies]
 walkdir = "2.1.4"
