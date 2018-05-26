@@ -1,10 +1,10 @@
 extern crate walkdir;
 
-use std::path::PathBuf;
+use std::fs::DirBuilder;
 use std::fs::File;
 use std::io::prelude::*;
+use std::path::PathBuf;
 use walkdir::WalkDir;
-use std::fs::DirBuilder;
 
 #[derive(Debug)]
 pub struct SimpleFile {
@@ -15,7 +15,7 @@ pub struct SimpleFile {
 
 type MiddlewareFunction = Box<FnMut(&mut Vec<SimpleFile>)>;
 
-pub fn seven(middleware: Vec<MiddlewareFunction>) -> Vec<SimpleFile> {
+pub fn seven(middleware: Vec<MiddlewareFunction>, destination: &str) -> Vec<SimpleFile> {
     let mut files = Vec::<SimpleFile>::new();
     read_dir(&mut files);
     for mut function in middleware {
@@ -61,13 +61,16 @@ mod tests {
 
     #[test]
     fn it_works() {
-        let result = seven(vec![Box::new(|files: &mut Vec<SimpleFile>| {
-            let file: &mut SimpleFile = &mut files[0];
-            file.content = "test hello".to_string();
-        }), Box::new(|files: &mut Vec<SimpleFile>| {
-            let file: &mut SimpleFile = &mut files[0];
-            file.content = "override".to_string();
-        })]);
+        let result = seven(vec![
+            Box::new(|files: &mut Vec<SimpleFile>| {
+                let file: &mut SimpleFile = &mut files[0];
+                file.content = "test hello".to_string();
+            }),
+            Box::new(|files: &mut Vec<SimpleFile>| {
+                let file: &mut SimpleFile = &mut files[0];
+                file.content = "override".to_string();
+            }),
+        ]);
         assert_eq!(result[0].content, "override");
     }
 }
