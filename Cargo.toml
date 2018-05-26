@@ -2,6 +2,8 @@
 name = "seven"
 version = "0.1.0"
 authors = ["Olivia Hugger <olivia@fastmail.com>"]
+description = "A simple and small file processor."
+license = "AGPL-3.0+"
 
 [dependencies]
 walkdir = "2.1.4"
