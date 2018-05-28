@@ -15,7 +15,11 @@ pub struct SimpleFile {
 
 type MiddlewareFunction = Box<FnMut(&mut Vec<SimpleFile>)>;
 
-pub fn seven(middleware: Vec<MiddlewareFunction>, source: Option<&str>, destination: Option<&str>) -> Vec<SimpleFile> {
+pub fn seven(
+    middleware: Vec<MiddlewareFunction>,
+    source: Option<&str>,
+    destination: Option<&str>,
+) -> Vec<SimpleFile> {
     let f_source = source.unwrap_or(".");
     let f_dest = destination.unwrap_or("_site");
     let mut files = Vec::<SimpleFile>::new();
