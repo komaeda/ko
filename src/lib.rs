@@ -2,12 +2,14 @@ extern crate walkdir;
 
 use std::fs::DirBuilder;
 use std::fs::File;
+use std::ffi::OsString;
 use std::io::prelude::*;
 use std::path::PathBuf;
 use walkdir::WalkDir;
 
 #[derive(Debug)]
 pub struct SimpleFile {
+    pub name: OsString,
     pub content: String,
     pub abs_path: PathBuf,
     pub rel_path: PathBuf,
@@ -40,6 +42,7 @@ fn read_dir(files: &mut Vec<SimpleFile>, source: &str) {
             let mut content = String::new();
             file.read_to_string(&mut content).unwrap();
             let file_struct = SimpleFile {
+                name: path.clone().file_name().unwrap().to_os_string(),
                 content,
                 abs_path: path.clone().canonicalize().unwrap(),
                 rel_path: path,
