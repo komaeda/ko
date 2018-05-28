@@ -22,7 +22,7 @@ fn main() {
     Box::new(|files: &mut Vec<SimpleFile>| {
       let file: &mut SimpleFile = &mut files[0];
       file.content = "test hello".to_string();
-    })
+    }, Some("source"), Some("destination"))
   ])
 }
 ```
