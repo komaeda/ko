@@ -8,9 +8,9 @@ use walkdir::WalkDir;
 
 #[derive(Debug)]
 pub struct SimpleFile {
-    content: String,
-    abs_path: PathBuf,
-    rel_path: PathBuf,
+    pub content: String,
+    pub abs_path: PathBuf,
+    pub rel_path: PathBuf,
 }
 
 type MiddlewareFunction = Box<FnMut(&mut Vec<SimpleFile>)>;
@@ -54,25 +54,5 @@ fn write_dir(files: &mut Vec<SimpleFile>, source: &str, destination: &str) {
         DirBuilder::new().recursive(true).create(&dir_path).unwrap();
         let mut fileref = File::create(&destination_path).unwrap();
         fileref.write_all(file.content.as_bytes()).unwrap();
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works() {
-        let result = seven(vec![
-            Box::new(|files: &mut Vec<SimpleFile>| {
-                let file: &mut SimpleFile = &mut files[0];
-                file.content = "test hello".to_string();
-            }),
-            Box::new(|files: &mut Vec<SimpleFile>| {
-                let file: &mut SimpleFile = &mut files[0];
-                file.content = "override".to_string();
-            }),
-        ], Some("example"), None);
-        assert_eq!(result[0].content, "override");
     }
 }
