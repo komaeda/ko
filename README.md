@@ -1,11 +1,11 @@
-# seven.rs
+# nya.rs
 
-`seven` is an extremely small file processor. It's currently not finished, and API changes could happen at any minor version increment.
+`nya` is an extremely small file processor. It's currently not finished, and API changes could happen at any minor version increment.
 
 ## Installation
 
 ```sh
-cargo add seven
+cargo add nya
 ```
 
 ## Usage
@@ -13,12 +13,12 @@ cargo add seven
 Currently, the way you'd use it is somewhat like this:
 
 ```rust
-extern crate seven;
+extern crate nya;
 
-use seven::{SimpleFile, create_middleware};
+use nya::{SimpleFile, create_middleware};
 
 fn main() {
-  seven::run(vec![
+  nya::run(vec![
     create_middleware(|files: &mut Vec<SimpleFile>| {
       let file: &mut SimpleFile = &mut files[0];
       file.content = "test hello".to_string();

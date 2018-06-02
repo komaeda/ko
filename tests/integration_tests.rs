@@ -1,11 +1,11 @@
-extern crate seven;
+extern crate nya;
 
 use std::ffi::OsString;
-use seven::{create_middleware, SimpleFile};
+use nya::{create_middleware, SimpleFile};
 
 #[test]
 fn it_works() {
-    let result = seven::run(vec![
+    let result = nya::run(vec![
         create_middleware(|files: &mut Vec<SimpleFile>| {
             let file: &mut SimpleFile = &mut files[0];
             file.content = "test hello".to_string();
@@ -23,7 +23,7 @@ fn it_works() {
 
 #[test]
 fn custom_source() {
-    let result = seven::run(vec![
+    let result = nya::run(vec![
         create_middleware(|files: &mut Vec<SimpleFile>| {
             let file: &mut SimpleFile = &mut files[0];
             file.content = "another test".to_string();
