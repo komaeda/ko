@@ -15,11 +15,11 @@ Currently, the way you'd use it is somewhat like this:
 ```rust
 extern crate seven;
 
-use seven::*;
+use seven::{SimpleFile, create_middleware};
 
 fn main() {
-  seven(vec![
-    Box::new(|files: &mut Vec<SimpleFile>| {
+  seven::seven(vec![
+    create_middleware(|files: &mut Vec<SimpleFile>| {
       let file: &mut SimpleFile = &mut files[0];
       file.content = "test hello".to_string();
     }, Some("source"), Some("destination"))
