@@ -18,6 +18,10 @@ pub struct SimpleFile {
 
 type MiddlewareFunction = Box<FnMut(&mut Vec<SimpleFile>)>;
 
+pub fn create_middleware<T>(x: T) -> Box<T> {
+    Box::new(x)
+}
+
 pub fn seven(
     middleware: Vec<MiddlewareFunction>,
     source: Option<&str>,

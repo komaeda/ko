@@ -1,16 +1,16 @@
 extern crate seven;
 
 use std::ffi::OsString;
-use seven::SimpleFile;
+use seven::{create_middleware, SimpleFile};
 
 #[test]
 fn it_works() {
     let result = seven::seven(vec![
-        Box::new(|files: &mut Vec<SimpleFile>| {
+        create_middleware(|files: &mut Vec<SimpleFile>| {
             let file: &mut SimpleFile = &mut files[0];
             file.content = "test hello".to_string();
         }),
-        Box::new(|files: &mut Vec<SimpleFile>| {
+        create_middleware(|files: &mut Vec<SimpleFile>| {
             let file: &mut SimpleFile = &mut files[0];
             file.content = "override".to_string();
         }),
@@ -24,7 +24,7 @@ fn it_works() {
 #[test]
 fn custom_source() {
     let result = seven::seven(vec![
-        Box::new(|files: &mut Vec<SimpleFile>| {
+        create_middleware(|files: &mut Vec<SimpleFile>| {
             let file: &mut SimpleFile = &mut files[0];
             file.content = "another test".to_string();
         }),
