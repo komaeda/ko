@@ -1,6 +1,6 @@
 [package]
 name = "nya"
-version = "0.1.0"
+version = "0.2.0"
 authors = ["Olivia Hugger <olivia@fastmail.com>"]
 description = "A simple and small file processor."
 license = "AGPL-3.0+"
