@@ -1,7 +1,5 @@
 extern crate seven;
 
-use std::fs::File;
-use std::io::prelude::*;
 use std::ffi::OsString;
 use seven::SimpleFile;
 
@@ -17,7 +15,10 @@ fn it_works() {
             file.content = "override".to_string();
         }),
     ], Some("example"), None);
-    assert_eq!(result[0].content, "override");
+
+    if let Ok(r) = result {
+        assert_eq!(r[0].content, "override".to_string());
+    }
 }
 
 #[test]
@@ -28,5 +29,7 @@ fn custom_source() {
             file.content = "another test".to_string();
         }),
     ], Some("fixtures/custom_source"), None);
-    assert_eq!(result[0].name, OsString::from("a.md"));
+    if let Ok(r) = result {
+        assert_eq!(r[0].name, OsString::from("a.md"));
+    }
 }
