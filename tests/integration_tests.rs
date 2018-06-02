@@ -5,7 +5,7 @@ use seven::{create_middleware, SimpleFile};
 
 #[test]
 fn it_works() {
-    let result = seven::seven(vec![
+    let result = seven::run(vec![
         create_middleware(|files: &mut Vec<SimpleFile>| {
             let file: &mut SimpleFile = &mut files[0];
             file.content = "test hello".to_string();
@@ -23,7 +23,7 @@ fn it_works() {
 
 #[test]
 fn custom_source() {
-    let result = seven::seven(vec![
+    let result = seven::run(vec![
         create_middleware(|files: &mut Vec<SimpleFile>| {
             let file: &mut SimpleFile = &mut files[0];
             file.content = "another test".to_string();

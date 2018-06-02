@@ -22,7 +22,7 @@ pub fn create_middleware<T>(x: T) -> Box<T> {
     Box::new(x)
 }
 
-pub fn seven(
+pub fn run(
     middleware: Vec<MiddlewareFunction>,
     source: Option<&str>,
     destination: Option<&str>,

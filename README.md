@@ -18,7 +18,7 @@ extern crate seven;
 use seven::{SimpleFile, create_middleware};
 
 fn main() {
-  seven::seven(vec![
+  seven::run(vec![
     create_middleware(|files: &mut Vec<SimpleFile>| {
       let file: &mut SimpleFile = &mut files[0];
       file.content = "test hello".to_string();
