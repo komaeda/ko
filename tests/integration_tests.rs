@@ -7,11 +7,11 @@ use nya::{create_middleware, SimpleFile};
 fn it_works() {
     let result = nya::run(vec![
         create_middleware(|files: &mut Vec<SimpleFile>| {
-            let file: &mut SimpleFile = &mut files[0];
+            let file = &mut files[0];
             file.content = "test hello".to_string();
         }),
         create_middleware(|files: &mut Vec<SimpleFile>| {
-            let file: &mut SimpleFile = &mut files[0];
+            let file = &mut files[0];
             file.content = "override".to_string();
         }),
     ], Some("example"), None);
@@ -25,7 +25,7 @@ fn it_works() {
 fn custom_source() {
     let result = nya::run(vec![
         create_middleware(|files: &mut Vec<SimpleFile>| {
-            let file: &mut SimpleFile = &mut files[0];
+            let file = &mut files[0];
             file.content = "another test".to_string();
         }),
     ], Some("fixtures/custom_source"), None);
