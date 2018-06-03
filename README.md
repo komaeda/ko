@@ -20,7 +20,7 @@ use nya::{SimpleFile, create_middleware};
 fn main() {
   nya::run(vec![
     create_middleware(|files: &mut Vec<SimpleFile>| {
-      let file: &mut SimpleFile = &mut files[0];
+      let file = &mut files[0];
       file.content = "test hello".to_string();
     }, Some("source"), Some("destination"))
   ]).unwrap()
