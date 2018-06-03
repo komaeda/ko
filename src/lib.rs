@@ -4,7 +4,6 @@ use std::fs::DirBuilder;
 use std::fs::File;
 use std::ffi::OsString;
 use std::io::prelude::*;
-use std::io;
 use std::path::PathBuf;
 use walkdir::WalkDir;
 
@@ -26,7 +25,7 @@ pub fn run(
     middleware: Vec<MiddlewareFunction>,
     source: Option<&str>,
     destination: Option<&str>,
-) -> Result<Vec<SimpleFile>, io::Error> {
+) -> Result<Vec<SimpleFile>, std::io::Error> {
     let f_source = source.unwrap_or(".");
     let f_dest = destination.unwrap_or("_site");
     let mut files = Vec::<SimpleFile>::new();
@@ -38,7 +37,7 @@ pub fn run(
     Ok(files)
 }
 
-fn read_dir(files: &mut Vec<SimpleFile>, source: &str) -> Result<(), io::Error> {
+fn read_dir(files: &mut Vec<SimpleFile>, source: &str) -> Result<(), std::io::Error> {
     for entry in WalkDir::new(source) {
         let entry = entry?;
         let path = entry.path().to_owned();
@@ -58,7 +57,7 @@ fn read_dir(files: &mut Vec<SimpleFile>, source: &str) -> Result<(), io::Error> 
     Ok(())
 }
 
-fn write_dir(files: &mut Vec<SimpleFile>, source: &str, destination: &str) -> Result<(), io::Error> {
+fn write_dir(files: &mut Vec<SimpleFile>, source: &str, destination: &str) -> Result<(), std::io::Error> {
     for file in files {
         let temp_path = file.rel_path.strip_prefix(source).unwrap();
         let destination_path = PathBuf::from(destination).join(temp_path);
