@@ -46,6 +46,6 @@ fn custom_destination() {
     if let Ok(r) = result {
         assert_eq!(r[0].content, "a third test".to_string());
         let path = Path::new("_site_2/mycoolfile.txt");
-        assert_eq!(path.exists(), true);
+        assert_eq!(path.is_file(), true);
     }
 }
