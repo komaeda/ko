@@ -1,4 +1,4 @@
-# nya.rs
+# nya.rs [![Build Status](https://travis-ci.org/crimelab/nya.svg?branch=master)](https://travis-ci.org/crimelab/nya)
 
 `nya` is an extremely small file processor. It's currently not finished, and API changes could happen at any minor version increment.
 
