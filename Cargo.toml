@@ -3,7 +3,16 @@ name = "nya"
 version = "0.2.0"
 authors = ["Olivia Hugger <olivia@fastmail.com>"]
 description = "A simple and small file processor."
+repository = "https://github.com/crimelab/nya"
+documentation = "https://docs.rs/nya"
+homepage = "https://github.com/crimelab/nya"
+readme = "README.md"
+categories = ["file-processor", "static-site-generator"]
+keywords = ["minimal", "processor", "files"]
 license = "AGPL-3.0+"
+
+[badges]
+travis-ci = { repository = "crimelab/nya" }
 
 [dependencies]
 walkdir = "2.1.4"
