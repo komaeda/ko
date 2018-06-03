@@ -2,16 +2,16 @@ extern crate nya;
 
 use std::ffi::OsString;
 use std::path::Path;
-use nya::{create_middleware, SimpleFile};
+use nya::create_middleware;
 
 #[test]
 fn it_works() {
     let result = nya::run(vec![
-        create_middleware(|files: &mut Vec<SimpleFile>| {
+        create_middleware(|files| {
             let file = &mut files[0];
             file.content = "test hello".to_string();
         }),
-        create_middleware(|files: &mut Vec<SimpleFile>| {
+        create_middleware(|files| {
             let file = &mut files[0];
             file.content = "override".to_string();
         }),
@@ -25,7 +25,7 @@ fn it_works() {
 #[test]
 fn custom_source() {
     let result = nya::run(vec![
-        create_middleware(|files: &mut Vec<SimpleFile>| {
+        create_middleware(|files| {
             let file = &mut files[0];
             file.content = "another test".to_string();
         }),
@@ -38,7 +38,7 @@ fn custom_source() {
 #[test]
 fn custom_destination() {
     let result = nya::run(vec![
-        create_middleware(|files: &mut Vec<SimpleFile>| {
+        create_middleware(|files| {
             let file = &mut files[0];
             file.content = "a third test".to_string();
         }),
