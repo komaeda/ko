@@ -7,7 +7,7 @@ repository = "https://github.com/crimelab/nya"
 documentation = "https://docs.rs/nya"
 homepage = "https://github.com/crimelab/nya"
 readme = "README.md"
-categories = ["file-processor", "static-site-generator"]
+categories = ["filesystem"]
 keywords = ["minimal", "processor", "files"]
 license = "AGPL-3.0+"
 
