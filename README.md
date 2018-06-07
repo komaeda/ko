@@ -1,6 +1,6 @@
 # nya.rs [![Build Status](https://travis-ci.org/crimelab/nya.svg?branch=master)](https://travis-ci.org/crimelab/nya)
 
-`nya` is an extremely small file processor. It's currently not finished, and API changes could happen at any minor version increment.
+`nya` is a small and cute file processor. It does only what you want it to do, and nothing else.
 
 ## Installation
 
@@ -27,7 +27,7 @@ fn main() {
 }
 ```
 
-This reads all files from a directory, and replaces the content of the first one with "test hello". That's about all it can do for now!
+This reads all files from a directory, and replaces the content of the first one with "test hello". Further documentation can be found on [docs.rs](http://docs.rs/nya).
 
 ## License
 
