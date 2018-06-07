@@ -18,8 +18,8 @@
 //!         create_middleware(|files| {
 //!             let file = &mut files[0];
 //!             file.content = "test hello".to_string();
-//!         }, Some("source"), Some("destination"))
-//!     ]).unwrap()
+//!         })
+//!     ], Some("fixtures/example"), Some("_site")).unwrap();
 //! }
 //! ```
 //!
@@ -37,9 +37,9 @@
 
 extern crate walkdir;
 
+use std::ffi::OsString;
 use std::fs::DirBuilder;
 use std::fs::File;
-use std::ffi::OsString;
 use std::io::prelude::*;
 use std::path::PathBuf;
 use walkdir::WalkDir;
@@ -50,11 +50,11 @@ use walkdir::WalkDir;
 ///
 /// ```
 /// let file = nya::SimpleFile {
-///     name: OsString::from("coolfile.txt"),
+///     name: std::ffi::OsString::from("coolfile.txt"),
 ///     content: "hello".to_string(),
-///     abs_path: PathBuf::from(r"/home/coolfile.txt"),
-///     rel_path: PathBuf::from(r"coolfile.txt"),
-/// }
+///     abs_path: std::path::PathBuf::from(r"/home/coolfile.txt"),
+///     rel_path: std::path::PathBuf::from(r"coolfile.txt"),
+/// };
 /// ```
 #[derive(Debug)]
 pub struct SimpleFile {
@@ -81,12 +81,12 @@ type MiddlewareFunction = Box<FnMut(&mut Vec<SimpleFile>)>;
 /// # Example
 ///
 /// ```
-/// let func = nya::create_middleware(|files| {
-///     let file = files[0];
-///     file.content = "haha hello";
-/// }
+/// let func = nya::create_middleware(|files: &mut Vec<nya::SimpleFile>| {
+///     let file = &mut files[0];
+///     file.content = "haha hello".to_string();
+/// });
 ///
-/// nya::run(vec![func]).unwrap();
+/// nya::run(vec![func], Some("fixtures/example"), None).unwrap();
 /// ```
 pub fn create_middleware<T>(x: T) -> Box<T> {
     Box::new(x)
@@ -104,12 +104,12 @@ pub fn create_middleware<T>(x: T) -> Box<T> {
 /// # Example
 ///
 /// ```
-/// let func = nya::create_middleware(|files| {
-///     let file = files[0];
-///     file.content = "haha hello";
-/// }
+/// let func = nya::create_middleware(|files: &mut Vec<nya::SimpleFile>| {
+///     let file = &mut files[0];
+///     file.content = "haha hello".to_string();
+/// });
 ///
-/// let result = nya::run(vec![func]);
+/// let result = nya::run(vec![func], Some("fixtures/example"), None);
 /// if let Ok(r) = result {
 ///     println!("Success!");
 /// }
@@ -151,7 +151,11 @@ fn read_dir(files: &mut Vec<SimpleFile>, source: &str) -> Result<(), std::io::Er
     Ok(())
 }
 
-fn write_dir(files: &mut Vec<SimpleFile>, source: &str, destination: &str) -> Result<(), std::io::Error> {
+fn write_dir(
+    files: &mut Vec<SimpleFile>,
+    source: &str,
+    destination: &str,
+) -> Result<(), std::io::Error> {
     for file in files {
         let temp_path = file.rel_path.strip_prefix(source).unwrap();
         let destination_path = PathBuf::from(destination).join(temp_path);
