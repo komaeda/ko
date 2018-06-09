@@ -42,6 +42,7 @@ use std::fs::DirBuilder;
 use std::fs::File;
 use std::io::prelude::*;
 use std::path::PathBuf;
+use std::collections::HashMap;
 use walkdir::WalkDir;
 
 /// A struct describing a simple file, with only a name, content, and its path.
@@ -54,6 +55,7 @@ use walkdir::WalkDir;
 ///     content: "hello".to_string(),
 ///     abs_path: std::path::PathBuf::from(r"/home/coolfile.txt"),
 ///     rel_path: std::path::PathBuf::from(r"coolfile.txt"),
+///     metadata: std::collections::HashMap::new(),
 /// };
 /// ```
 #[derive(Debug)]
@@ -66,6 +68,8 @@ pub struct SimpleFile {
     pub abs_path: PathBuf,
     /// The relative path of the file, as a `PathBuf`.
     pub rel_path: PathBuf,
+    /// Metadata that's relevant to the file, in a `HashMap`.
+    pub metadata: HashMap<&'static str, String>,
 }
 
 type MiddlewareFunction = Box<FnMut(&mut Vec<SimpleFile>)>;
@@ -144,6 +148,7 @@ fn read_dir(files: &mut Vec<SimpleFile>, source: &str) -> Result<(), std::io::Er
                 content,
                 abs_path: path.clone().canonicalize()?,
                 rel_path: path,
+                metadata: HashMap::new(),
             };
             &files.push(file_struct);
         }
