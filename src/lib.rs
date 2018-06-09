@@ -45,6 +45,10 @@
 //! virtual, meaning it doesn't actually affect what's written to disk (unless you make
 //! something out of it!)
 //!
+//! There's no _global_ metadata support in `nya`, because I believe that should be implemented
+//! in your application layer, rather than relying on `nya`. It'd also break the perfectly
+//! simple library interface that we have going here.
+//!
 //! ### How does `nya` compare to other software?
 //!
 //! At some distant point in time, I'd like for `nya` to be used as a static site
@@ -67,7 +71,8 @@ use std::path::PathBuf;
 use std::collections::HashMap;
 use walkdir::WalkDir;
 
-/// A struct describing a simple file, with only a name, content, and its path.
+/// A struct describing a simple file, with only a name, content, path
+/// (relative & absolute), and custom metadata.
 ///
 /// # Examples
 ///
