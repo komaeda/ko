@@ -49,3 +49,21 @@ fn custom_destination() {
         assert_eq!(path.is_file(), true);
     }
 }
+
+#[test]
+fn custom_metadata() {
+    let result = nya::run(vec![
+        create_middleware(|files| {
+            let file = &mut files[0];
+            file.metadata.insert("test", "the fourth test".to_string());
+        }),
+        create_middleware(|files| {
+            let file = &mut files[0];
+            let content = file.metadata.get("test").unwrap();
+            file.content = content.to_owned();
+        })
+    ], Some("fixtures/example"), None);
+    if let Ok(r) = result {
+        assert_eq!(r[0].content, "the fourth test".to_string());
+    }
+}
