@@ -23,6 +23,28 @@
 //! }
 //! ```
 //!
+//! Don't worry, `nya` also has support for passing around custom metadata per-file
+//! via a `HashMap<&str, String>`:
+//!
+//! ```
+//! extern crate nya;
+//!
+//! use nya::create_middleware;
+//!
+//! fn main() {
+//!     nya::run(vec![
+//!         create_middleware(|files| {
+//!             let file = &mut files[0];
+//!             file.metadata.insert("cool stuff", "test hello".to_string());
+//!         })
+//!     ], Some("fixtures/example"), Some("_site")).unwrap();
+//! }
+//! ```
+//!
+//! And then later on, you could extract it from the same file. Metadata is completely
+//! virtual, meaning it doesn't actually affect what's written to disk (unless you make
+//! something out of it!)
+//!
 //! ### How does `nya` compare to other software?
 //!
 //! At some distant point in time, I'd like for `nya` to be used as a static site
