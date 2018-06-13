@@ -62,6 +62,7 @@
 //! as light as possible.
 
 extern crate walkdir;
+extern crate globset;
 
 use std::collections::HashMap;
 use std::ffi::OsString;
@@ -70,6 +71,7 @@ use std::fs::File;
 use std::io::prelude::*;
 use std::path::PathBuf;
 use walkdir::WalkDir;
+use globset::{Glob, GlobSetBuilder};
 
 /// A struct describing a simple file, with only a name, content, path
 /// (relative & absolute), and custom metadata.
@@ -160,6 +162,20 @@ pub fn run(
     }
     write_dir(&mut files, f_source, f_dest)?;
     Ok(files)
+}
+
+pub fn ignore(list: Vec<&'static str>) -> MiddlewareFunction {
+    create_middleware(move |files| {
+        let mut builder = GlobSetBuilder::new();
+        for item in &list {
+            builder.add(Glob::new(item).unwrap());
+        }
+        let set = builder.build().unwrap();
+        files.retain(|f| {
+            let path = f.rel_path.to_str().unwrap();
+            !set.is_match(path)
+        });
+    })
 }
 
 fn read_dir(files: &mut Vec<SimpleFile>, source: &str) -> Result<(), std::io::Error> {

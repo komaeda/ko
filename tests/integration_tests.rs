@@ -67,3 +67,16 @@ fn custom_metadata() {
         assert_eq!(r[0].content, "the fourth test".to_string());
     }
 }
+
+#[test]
+fn ignore_files() {
+    let result = nya::run(vec![
+        nya::ignore(vec![
+            "*.txt",
+        ]),
+    ], Some("fixtures/ignore"), None);
+    if let Ok(r) = result {
+        assert_eq!(r.len(), 1);
+        assert_eq!(r[0].name, OsString::from("test.md"));
+    }
+}

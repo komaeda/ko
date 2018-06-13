@@ -16,3 +16,4 @@ travis-ci = { repository = "crimelab/nya" }
 
 [dependencies]
 walkdir = "2.1.4"
+globset = "0.4.0"
