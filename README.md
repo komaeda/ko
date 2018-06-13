@@ -15,10 +15,11 @@ Currently, the way you'd use it is somewhat like this:
 ```rust
 extern crate nya;
 
-use nya::create_middleware;
+use nya::{ignore, create_middleware};
 
 fn main() {
   nya::run(vec![
+    ignore(vec!["target/", ".DS_Store"]),
     create_middleware(|files| {
       let file = &mut files[0];
       file.content = "test hello".to_string();

@@ -58,8 +58,8 @@
 //! Existing Rust SSGs have all more or less tried to replicate the full feature set
 //! of Jekyll or comparable software, so I hope I'll be scratching an itch here.
 //!
-//! `nya` currently only depends on `walkdir`, and I'd like to keep dependencies
-//! as light as possible.
+//! `nya` currently only depends on `walkdir` and `globset`, and I'd like to keep
+//! dependencies as light as possible.
 
 extern crate walkdir;
 extern crate globset;
@@ -163,6 +163,19 @@ pub fn run(
     write_dir(&mut files, f_source, f_dest)?;
     Ok(files)
 }
+
+/// Included middleware that excludes files from processing based on
+/// glob patterns.
+///
+/// # Example
+///
+/// ```
+/// let result = nya::run(vec![
+///     nya::ignore(vec!["**/*.txt", "node_modules/"]),
+/// ], Some("fixtures/example"), None);
+/// if let Ok(r) = result {
+///     println!("Success!");
+/// }
 
 pub fn ignore(list: Vec<&'static str>) -> MiddlewareFunction {
     create_middleware(move |files| {
