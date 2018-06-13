@@ -63,12 +63,12 @@
 
 extern crate walkdir;
 
+use std::collections::HashMap;
 use std::ffi::OsString;
 use std::fs::DirBuilder;
 use std::fs::File;
 use std::io::prelude::*;
 use std::path::PathBuf;
-use std::collections::HashMap;
 use walkdir::WalkDir;
 
 /// A struct describing a simple file, with only a name, content, path
