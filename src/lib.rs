@@ -101,7 +101,8 @@ pub struct SimpleFile {
     pub metadata: HashMap<&'static str, String>,
 }
 
-type MiddlewareFunction = Box<FnMut(&mut Vec<SimpleFile>)>;
+/// A type describing middleware functions.
+pub type MiddlewareFunction = Box<FnMut(&mut Vec<SimpleFile>)>;
 
 /// A convenience function that creates middleware.
 ///
