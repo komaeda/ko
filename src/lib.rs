@@ -87,7 +87,7 @@ use globset::{Glob, GlobSetBuilder};
 ///     metadata: std::collections::HashMap::new(),
 /// };
 /// ```
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Clone)]
 pub struct SimpleFile {
     /// The filename, as an `OsString`.
     pub name: OsString,
