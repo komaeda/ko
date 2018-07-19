@@ -72,7 +72,7 @@ fn custom_metadata() {
 fn ignore_files() {
     let result = nya::run(vec![
         nya::ignore(vec![
-            "*.txt",
+            "*.txt".to_owned(),
         ]),
     ], Some("fixtures/ignore"), None);
     if let Ok(r) = result {

@@ -172,13 +172,14 @@ pub fn run(
 ///
 /// ```
 /// let result = nya::run(vec![
-///     nya::ignore(vec!["**/*.txt", "node_modules/"]),
+///     nya::ignore(vec!["**/*.txt".to_owned(), "node_modules/".to_owned()]),
 /// ], Some("fixtures/example"), None);
 /// if let Ok(r) = result {
 ///     println!("Success!");
 /// }
+/// ```
 
-pub fn ignore(list: Vec<&'static str>) -> MiddlewareFunction {
+pub fn ignore(list: Vec<String>) -> MiddlewareFunction {
     create_middleware(move |files| {
         let mut builder = GlobSetBuilder::new();
         for item in &list {
