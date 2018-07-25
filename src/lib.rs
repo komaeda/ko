@@ -215,8 +215,12 @@ fn write_dir(
     destination: &str,
 ) -> Result<(), std::io::Error> {
     for file in files {
-        let temp_path = &file.rel_path;
-        let destination_path = PathBuf::from(destination).join(temp_path);
+        let mut tpath;
+        match &file.rel_path.strip_prefix("/") {
+            Ok(p) => tpath = p.to_owned(),
+            Err(_) => tpath = &file.rel_path,
+        }
+        let destination_path = PathBuf::from(destination).join(tpath);
         let mut dir_path = destination_path.clone();
         dir_path.pop();
         DirBuilder::new().recursive(true).create(&dir_path)?;
