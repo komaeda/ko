@@ -82,7 +82,6 @@ use globset::{Glob, GlobSetBuilder};
 /// let file = nya::SimpleFile {
 ///     name: std::ffi::OsString::from("coolfile.txt"),
 ///     content: "hello".to_string(),
-///     abs_path: std::path::PathBuf::from(r"/home/coolfile.txt"),
 ///     rel_path: std::path::PathBuf::from(r"coolfile.txt"),
 ///     metadata: std::collections::HashMap::new(),
 /// };
@@ -93,8 +92,6 @@ pub struct SimpleFile {
     pub name: OsString,
     /// The content of the file, as an owned `String`.
     pub content: String,
-    /// The absolute path of the file, as a `PathBuf`.
-    pub abs_path: PathBuf,
     /// The relative path of the file, as a `PathBuf`.
     pub rel_path: PathBuf,
     /// Metadata that's relevant to the file, in a `HashMap`.
@@ -161,7 +158,7 @@ pub fn run(
     for mut function in middleware {
         function(&mut files);
     }
-    write_dir(&mut files, f_source, f_dest)?;
+    write_dir(&mut files, f_dest)?;
     Ok(files)
 }
 
@@ -204,8 +201,7 @@ fn read_dir(files: &mut Vec<SimpleFile>, source: &str) -> Result<(), std::io::Er
             let file_struct = SimpleFile {
                 name: path.clone().file_name().unwrap().to_os_string(),
                 content,
-                abs_path: path.clone().canonicalize()?,
-                rel_path: path,
+                rel_path: path.strip_prefix(source).unwrap().to_owned(),
                 metadata: HashMap::new(),
             };
             &files.push(file_struct);
@@ -216,11 +212,10 @@ fn read_dir(files: &mut Vec<SimpleFile>, source: &str) -> Result<(), std::io::Er
 
 fn write_dir(
     files: &mut Vec<SimpleFile>,
-    source: &str,
     destination: &str,
 ) -> Result<(), std::io::Error> {
     for file in files {
-        let temp_path = file.rel_path.strip_prefix(source).unwrap();
+        let temp_path = &file.rel_path;
         let destination_path = PathBuf::from(destination).join(temp_path);
         let mut dir_path = destination_path.clone();
         dir_path.pop();
