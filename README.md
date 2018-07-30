@@ -8,6 +8,8 @@
 cargo add nya
 ```
 
+Install [cargo-edit](https://github.com/killercup/cargo-edit) to extends Cargo to allow you to add, remove, and upgrade dependencies by modifying your Cargo.toml file from the command line.
+
 ## Usage
 
 Currently, the way you'd use it is somewhat like this:
