@@ -15,7 +15,7 @@ fn it_works() {
             let file = &mut files[0];
             file.content = "override".to_string();
         }),
-    ], Some("example"), None);
+    ], Some("fixtures/example"), None);
 
     if let Ok(r) = result {
         assert_eq!(r[0].content, "override".to_string());
