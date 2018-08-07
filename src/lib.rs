@@ -195,9 +195,8 @@ fn read_dir(files: &mut Vec<SimpleFile>, source: &str) -> Result<(), std::io::Er
         let entry = entry?;
         let path = entry.path().to_owned();
         if !&path.is_dir() {
-            let mut file = File::open(&path)?;
             let mut content = String::new();
-            file.read_to_string(&mut content)?;
+            File::open(&path)?.read_to_string(&mut content)?;
             let file_struct = SimpleFile {
                 name: path.clone().file_name().unwrap().to_os_string(),
                 content,
@@ -224,8 +223,7 @@ fn write_dir(
         let mut dir_path = destination_path.clone();
         dir_path.pop();
         DirBuilder::new().recursive(true).create(&dir_path)?;
-        let mut fileref = File::create(&destination_path)?;
-        fileref.write_all(file.content.as_bytes())?;
+        File::create(&destination_path)?.write_all(file.content.as_bytes())?;
     }
     Ok(())
 }
