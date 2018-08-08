@@ -169,7 +169,7 @@ pub fn run(
 ///
 /// ```
 /// let result = nya::run(vec![
-///     nya::ignore(vec!["**/*.txt".to_owned(), "node_modules/".to_owned()]),
+///     nya::ignore(vec!["**/*.txt", "node_modules/"]),
 /// ], Some("fixtures/example"), None);
 /// if let Ok(r) = result {
 ///     println!("Success!");
