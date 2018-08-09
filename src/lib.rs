@@ -191,20 +191,21 @@ pub fn ignore(list: Vec<String>) -> MiddlewareFunction {
 }
 
 fn read_dir(files: &mut Vec<SimpleFile>, source: &str) -> Result<(), std::io::Error> {
-    for entry in WalkDir::new(source) {
-        let entry = entry?;
-        let path = entry.path().to_owned();
-        if !&path.is_dir() {
-            let mut content = String::new();
-            File::open(&path)?.read_to_string(&mut content)?;
-            let file_struct = SimpleFile {
-                name: path.clone().file_name().unwrap().to_os_string(),
-                content,
-                rel_path: path.strip_prefix(source).unwrap().to_owned(),
-                metadata: HashMap::new(),
-            };
-            &files.push(file_struct);
-        }
+    let iters = WalkDir::new(source)
+                .into_iter()
+                .filter_map(|e| e.ok())
+                .filter(|e| !e.path().is_dir());                
+    for entry in iters {
+        let path = entry.path();
+        let mut content = String::new();
+        File::open(path)?.read_to_string(&mut content)?;
+        let file_struct = SimpleFile {
+            name: path.file_name().unwrap().to_os_string(),
+            content,
+            rel_path: path.strip_prefix(source).unwrap().to_owned(),
+            metadata: HashMap::new(),
+        };
+        files.push(file_struct);
     }
     Ok(())
 }
