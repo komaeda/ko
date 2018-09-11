@@ -1,4 +1,4 @@
-# nya.rs [![Build Status](https://travis-ci.org/isbr/nya.svg?branch=master)](https://travis-ci.org/isbr/nya)
+# nya.rs [![Build Status](https://travis-ci.org/coll/nya.svg?branch=master)](https://travis-ci.org/coll/nya)
 
 `nya` is a small and cute file processor. It does only what you want it to do, and nothing else.
 

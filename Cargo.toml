@@ -3,16 +3,16 @@ name = "nya"
 version = "0.7.0"
 authors = ["Olivia Hugger <olivia@fastmail.com>"]
 description = "A simple and small file processor."
-repository = "https://github.com/isbr/nya"
+repository = "https://github.com/coll/nya"
 documentation = "https://docs.rs/nya"
-homepage = "https://github.com/isbr/nya"
+homepage = "https://github.com/coll/nya"
 readme = "README.md"
 categories = ["filesystem"]
 keywords = ["minimal", "processor", "files"]
 license = "AGPL-3.0+"
 
 [badges]
-travis-ci = { repository = "isbr/nya" }
+travis-ci = { repository = "coll/nya" }
 
 [dependencies]
 walkdir = "2.1.4"
