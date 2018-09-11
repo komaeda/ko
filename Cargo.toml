@@ -1,6 +1,6 @@
 [package]
 name = "nya"
-version = "0.7.0"
+version = "0.7.1"
 authors = ["Olivia Hugger <olivia@fastmail.com>"]
 description = "A simple and small file processor."
 repository = "https://github.com/coll/nya"
