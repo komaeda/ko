@@ -12,7 +12,7 @@ Install [cargo-edit](https://github.com/killercup/cargo-edit) to extend Cargo, a
 
 ## Usage
 
-Currently, the way you'd use it is somewhat like this:
+You'd use `nya` somewhat like this:
 
 ```rust
 extern crate nya;
@@ -30,7 +30,7 @@ fn main() {
 }
 ```
 
-This reads all files from a directory, and replaces the content of the first one with "test hello". Further documentation can be found on [docs.rs](http://docs.rs/nya).
+This reads all files from a directory, and replaces the content of the first one with "test hello". Full documentation can be found on [docs.rs](http://docs.rs/nya).
 
 ## License
 
