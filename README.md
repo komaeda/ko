@@ -17,8 +17,6 @@ Install [cargo-edit](https://github.com/killercup/cargo-edit) to extend Cargo, a
 You'd use `nya` somewhat like this:
 
 ```rust
-extern crate nya;
-
 use nya::{ignore, create_middleware};
 
 fn main() {
