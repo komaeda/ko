@@ -1,12 +1,10 @@
-extern crate nya;
-
 use std::ffi::OsString;
 use std::path::Path;
-use nya::create_middleware;
+use ko::create_middleware;
 
 #[test]
 fn it_works() {
-    let result = nya::run(vec![
+    let result = ko::run(vec![
         create_middleware(|files| {
             let file = &mut files[0];
             file.content = "test hello".to_string();
@@ -24,7 +22,7 @@ fn it_works() {
 
 #[test]
 fn custom_source() {
-    let result = nya::run(vec![
+    let result = ko::run(vec![
         create_middleware(|files| {
             let file = &mut files[0];
             file.content = "another test".to_string();
@@ -37,7 +35,7 @@ fn custom_source() {
 
 #[test]
 fn custom_destination() {
-    let result = nya::run(vec![
+    let result = ko::run(vec![
         create_middleware(|files| {
             let file = &mut files[0];
             file.content = "a third test".to_string();
@@ -52,7 +50,7 @@ fn custom_destination() {
 
 #[test]
 fn custom_metadata() {
-    let result = nya::run(vec![
+    let result = ko::run(vec![
         create_middleware(|files| {
             let file = &mut files[0];
             file.metadata.insert("test", "the fourth test".to_string());
@@ -70,8 +68,8 @@ fn custom_metadata() {
 
 #[test]
 fn ignore_files() {
-    let result = nya::run(vec![
-        nya::ignore(vec![
+    let result = ko::run(vec![
+        ko::ignore(vec![
             "*.txt".to_owned(),
         ]),
     ], Some("fixtures/ignore"), None);

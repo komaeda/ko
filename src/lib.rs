@@ -1,20 +1,20 @@
-//! `nya` is a simple file processor. It's extremely simple, very fast, and super
+//! `ko` is a simple file processor. It's extremely simple, very fast, and super
 //! cute, as well. It reads files from a directory, does stuff to them, and then
 //! spits them out somewhere else. That's all it does. The "stuff" that's being
 //! done to the files is called _middleware_. Middleware is just a function that
 //! takes a struct representing a file and then does something to that file.
-//! It doesn't even have to return it! That's how easy it is to use `nya`. Can
+//! It doesn't even have to return it! That's how easy it is to use `ko`. Can
 //! you believe it?
 //! 
-//! nya requires __Rust 2018__ (Rust 1.31+).
+//! ko requires __Rust 2018__ (Rust 1.31+).
 //!
 //! In its simplest form, you'd use it somewhat like this:
 //!
 //! ```
-//! use nya::create_middleware;
+//! use ko::create_middleware;
 //!
 //! fn main() {
-//!     nya::run(vec![
+//!     ko::run(vec![
 //!         create_middleware(|files| {
 //!             let file = &mut files[0];
 //!             file.content = "test hello".to_string();
@@ -23,14 +23,14 @@
 //! }
 //! ```
 //!
-//! Don't worry, `nya` also has support for passing around custom metadata per-file
+//! Don't worry, `ko` also has support for passing around custom metadata per-file
 //! via a `HashMap<&str, String>`:
 //!
 //! ```
-//! use nya::create_middleware;
+//! use ko::create_middleware;
 //!
 //! fn main() {
-//!     nya::run(vec![
+//!     ko::run(vec![
 //!         create_middleware(|files| {
 //!             let file = &mut files[0];
 //!             file.metadata.insert("cool stuff", "test hello".to_string());
@@ -43,20 +43,20 @@
 //! virtual, meaning it doesn't actually affect what's written to disk (unless you make
 //! something out of it!)
 //!
-//! There's no _global_ metadata support in `nya`, because I believe that should be implemented
-//! in your application layer, rather than relying on `nya`. It'd also break the perfectly
+//! There's no _global_ metadata support in `ko`, because I believe that should be implemented
+//! in your application layer, rather than relying on `ko`. It'd also break the perfectly
 //! simple library interface that we have going here.
 //!
-//! ### How does `nya` compare to other software?
+//! ### How does `ko` compare to other software?
 //!
-//! At some distant point in time, I'd like for `nya` to be used as a static site
+//! At some distant point in time, I'd like for `ko` to be used as a static site
 //! generator. How would it compare to other existing static site generators, then?
 //! Well, it's much simpler than __Jekyll__ or __Hugo__, for example, and it's even
 //! simpler than other JavaScript-based SSGs such as __Metalsmith__ or __Wintersmith__.
 //! Existing Rust SSGs have all more or less tried to replicate the full feature set
 //! of Jekyll or comparable software, so I hope I'll be scratching an itch here.
 //!
-//! `nya` currently only depends on `walkdir` and `globset`, and I'd like to keep
+//! `ko` currently only depends on `walkdir` and `globset`, and I'd like to keep
 //! dependencies as light as possible.
 
 use std::collections::HashMap;
@@ -74,7 +74,7 @@ use globset::{Glob, GlobSetBuilder};
 /// # Examples
 ///
 /// ```
-/// let file = nya::SimpleFile {
+/// let file = ko::SimpleFile {
 ///     name: std::ffi::OsString::from("coolfile.txt"),
 ///     content: "hello".to_string(),
 ///     rel_path: std::path::PathBuf::from(r"coolfile.txt"),
@@ -107,12 +107,12 @@ pub type MiddlewareFunction = Box<FnMut(&mut Vec<SimpleFile>)>;
 /// # Example
 ///
 /// ```
-/// let func = nya::create_middleware(|files: &mut Vec<nya::SimpleFile>| {
+/// let func = ko::create_middleware(|files: &mut Vec<ko::SimpleFile>| {
 ///     let file = &mut files[0];
 ///     file.content = "haha hello".to_string();
 /// });
 ///
-/// nya::run(vec![func], Some("fixtures/example"), None).unwrap();
+/// ko::run(vec![func], Some("fixtures/example"), None).unwrap();
 /// ```
 pub fn create_middleware<T>(x: T) -> Box<T> {
     Box::new(x)
@@ -130,12 +130,12 @@ pub fn create_middleware<T>(x: T) -> Box<T> {
 /// # Example
 ///
 /// ```
-/// let func = nya::create_middleware(|files: &mut Vec<nya::SimpleFile>| {
+/// let func = ko::create_middleware(|files: &mut Vec<ko::SimpleFile>| {
 ///     let file = &mut files[0];
 ///     file.content = "haha hello".to_string();
 /// });
 ///
-/// let result = nya::run(vec![func], Some("fixtures/example"), None);
+/// let result = ko::run(vec![func], Some("fixtures/example"), None);
 /// if let Ok(r) = result {
 ///     println!("Success!");
 /// }
@@ -163,8 +163,8 @@ pub fn run(
 /// # Example
 ///
 /// ```
-/// let result = nya::run(vec![
-///     nya::ignore(vec!["**/*.txt".to_owned(), "node_modules/".to_owned()]),
+/// let result = ko::run(vec![
+///     ko::ignore(vec!["**/*.txt".to_owned(), "node_modules/".to_owned()]),
 /// ], Some("fixtures/example"), None);
 /// if let Ok(r) = result {
 ///     println!("Success!");
