@@ -5,6 +5,8 @@
 //! takes a struct representing a file and then does something to that file.
 //! It doesn't even have to return it! That's how easy it is to use `nya`. Can
 //! you believe it?
+//! 
+//! nya requires __Rust 2018__ (Rust 1.31+).
 //!
 //! In its simplest form, you'd use it somewhat like this:
 //!

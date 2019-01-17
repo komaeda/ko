@@ -4,6 +4,8 @@
 
 ## Installation
 
+Make sure you have Rust 2018 (Rust 1.31+) installed.
+
 ```sh
 cargo add nya
 ```
