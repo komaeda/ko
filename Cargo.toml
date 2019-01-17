@@ -1,18 +1,19 @@
 [package]
 name = "nya"
-version = "1.0.0"
-authors = ["Olivia Hugger <olivia@fastmail.com>"]
+edition = "2018"
+version = "1.0.1"
+authors = ["Lynn <819880950@qq.com>"]
 description = "A simple and small file processor."
-repository = "https://github.com/coll/nya"
+repository = "https://github.com/komaeda/nya"
 documentation = "https://docs.rs/nya"
-homepage = "https://github.com/coll/nya"
+homepage = "https://github.com/komaeda/nya"
 readme = "README.md"
 categories = ["filesystem"]
 keywords = ["minimal", "processor", "files"]
 license = "AGPL-3.0+"
 
 [badges]
-travis-ci = { repository = "coll/nya" }
+travis-ci = { repository = "komaeda/nya" }
 
 [dependencies]
 walkdir = "2.1.4"

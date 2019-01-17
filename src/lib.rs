@@ -9,8 +9,6 @@
 //! In its simplest form, you'd use it somewhat like this:
 //!
 //! ```
-//! extern crate nya;
-//!
 //! use nya::create_middleware;
 //!
 //! fn main() {
@@ -27,8 +25,6 @@
 //! via a `HashMap<&str, String>`:
 //!
 //! ```
-//! extern crate nya;
-//!
 //! use nya::create_middleware;
 //!
 //! fn main() {
@@ -60,9 +56,6 @@
 //!
 //! `nya` currently only depends on `walkdir` and `globset`, and I'd like to keep
 //! dependencies as light as possible.
-
-extern crate walkdir;
-extern crate globset;
 
 use std::collections::HashMap;
 use std::ffi::OsString;
@@ -215,7 +208,7 @@ fn write_dir(
     destination: &str,
 ) -> Result<(), std::io::Error> {
     for file in files {
-        let mut tpath;
+        let tpath;
         match &file.rel_path.strip_prefix("/") {
             Ok(p) => tpath = p.to_owned(),
             Err(_) => tpath = &file.rel_path,
