@@ -21,7 +21,7 @@ use ko::{ignore, create_middleware};
 
 fn main() {
   ko::run(vec![
-    ignore(vec!["target/", ".DS_Store"]),
+    ignore(vec![String::from("target/")]),
     create_middleware(|files| {
       let file = &mut files[0];
       file.content = "test hello".to_string();
