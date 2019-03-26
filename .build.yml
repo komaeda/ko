@@ -5,5 +5,5 @@ sources:
   - https://github.com/komaeda/ko.git
 tasks:
   - test: |
-    cd ko
-    cargo test
+      cd ko
+      cargo test
