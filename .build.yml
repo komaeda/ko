@@ -1,0 +1,9 @@
+image: alpine/latest
+packages:
+  - rust
+sources:
+  - https://github.com/komaeda/ko.git
+tasks:
+  - test: |
+    cd ko
+    cargo test
