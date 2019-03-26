@@ -12,9 +12,6 @@ categories = ["filesystem"]
 keywords = ["minimal", "processor", "files"]
 license = "AGPL-3.0+"
 
-[badges]
-travis-ci = { repository = "komaeda/ko" }
-
 [dependencies]
 walkdir = "2.1.4"
 globset = "0.4.0"
