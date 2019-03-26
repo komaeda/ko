@@ -1,4 +1,4 @@
-# ko [![Build Status](https://travis-ci.org/komaeda/ko.svg?branch=master)](https://travis-ci.org/komaeda/ko)
+# ko [![builds.sr.ht status](https://builds.sr.ht/~lyn/ko.svg)](https://builds.sr.ht/~lyn/ko?) 
 
 `ko` is a small and cute file processor. It does only what you want it to do, and nothing else.
 
