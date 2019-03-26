@@ -1,8 +1,8 @@
 [package]
 name = "ko"
 edition = "2018"
-version = "1.0.1"
-authors = ["Lynn <819880950@qq.com>"]
+version = "1.0.2"
+authors = ["Olivia <819880950@qq.com>"]
 description = "A simple and small file processor."
 repository = "https://github.com/komaeda/ko"
 documentation = "https://docs.rs/ko"
